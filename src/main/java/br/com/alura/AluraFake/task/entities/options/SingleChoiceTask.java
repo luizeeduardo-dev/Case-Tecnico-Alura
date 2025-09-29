@@ -1,9 +1,8 @@
-package br.com.alura.AluraFake.task.options;
+package br.com.alura.AluraFake.task.entities.options;
 
 import br.com.alura.AluraFake.course.Course;
-import br.com.alura.AluraFake.task.ChoiceTask;
-import br.com.alura.AluraFake.task.Task;
-import br.com.alura.AluraFake.task.TaskType;
+import br.com.alura.AluraFake.task.entities.ChoiceTask;
+import br.com.alura.AluraFake.task.entities.TaskType;
 import jakarta.persistence.Entity;
 
 @Entity

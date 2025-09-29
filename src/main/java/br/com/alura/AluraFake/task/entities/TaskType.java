@@ -1,4 +1,4 @@
-package br.com.alura.AluraFake.task;
+package br.com.alura.AluraFake.task.entities;
 
 public enum TaskType {
     OPEN_TEXT,
