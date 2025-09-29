@@ -1,0 +1,22 @@
+CREATE TABLE tasks (
+    id bigint NOT NULL AUTO_INCREMENT,
+    statement VARCHAR(255) NOT NULL,
+    task_order INT NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    course_id BIGINT NOT NULL,
+    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_task_course_statement (course_id, statement),
+    CONSTRAINT FK_Task_Course FOREIGN KEY (course_id) REFERENCES Course(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE task_options (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    text VARCHAR(80) NOT NULL,
+    is_correct BOOLEAN NOT NULL DEFAULT FALSE,
+    task_id BIGINT NOT NULL,
+
+    PRIMARY KEY (id),
+    CONSTRAINT FK_Option_Task FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
