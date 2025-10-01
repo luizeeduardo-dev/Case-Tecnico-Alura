@@ -1,24 +1,43 @@
 package br.com.alura.AluraFake.task.controller;
 
+import br.com.alura.AluraFake.task.dto.MultipleChoiceTaskDTO;
+import br.com.alura.AluraFake.task.dto.OpenTextTaskDTO;
+import br.com.alura.AluraFake.task.dto.SingleChoiceTaskDTO;
+import br.com.alura.AluraFake.task.entities.OpenTextTask;
+import br.com.alura.AluraFake.task.entities.options.MultipleChoiceTask;
+import br.com.alura.AluraFake.task.entities.options.SingleChoiceTask;
+import br.com.alura.AluraFake.task.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/task")
 public class TaskController {
 
-    @PostMapping("/task/new/opentext")
-    public ResponseEntity newOpenTextExercise() {
-        return ResponseEntity.ok().build();
-    }
+  private final TaskService taskService;
 
-    @PostMapping("/task/new/singlechoice")
-    public ResponseEntity newSingleChoice() {
-        return ResponseEntity.ok().build();
-    }
+  public TaskController(TaskService service) {
+    this.taskService = service;
+  }
 
-    @PostMapping("/task/new/multiplechoice")
-    public ResponseEntity newMultipleChoice() {
-        return ResponseEntity.ok().build();
-    }
+  @PostMapping("/new/opentext")
+  public ResponseEntity<OpenTextTask> newOpenTextExercise(@RequestBody OpenTextTaskDTO taskDto) {
+    this.taskService.createOpenTextTask(taskDto);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
 
+  @PostMapping("/new/singlechoice")
+  public ResponseEntity<SingleChoiceTask> newSingleChoice(
+      @RequestBody SingleChoiceTaskDTO taskDTO) {
+    this.taskService.createSingleChoiceTask(taskDTO);
+    return ResponseEntity.ok().build();
+  }
+
+  @PostMapping("/new/multiplechoice")
+  public ResponseEntity<MultipleChoiceTask> newMultipleChoice(
+      @RequestBody MultipleChoiceTaskDTO taskDTO) {
+    this.taskService.createMultipleChoiceTask(taskDTO);
+    return ResponseEntity.ok().build();
+  }
 }

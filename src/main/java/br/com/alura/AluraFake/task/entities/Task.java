@@ -17,7 +17,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(
     name = "tasks",
@@ -28,12 +34,12 @@ public abstract class Task {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  Long id;
 
   private String statement;
 
   @Column(name = "task_order")
-  private Integer taskOrder;
+  private Integer order;
 
   @Column(name = "type", insertable = false, updatable = false)
   @Enumerated(EnumType.STRING)
@@ -43,30 +49,10 @@ public abstract class Task {
   @JoinColumn(name = "course_id")
   private Course course;
 
-  private Long getId() {
-    return this.id;
-  }
-
-  public String getStatement() {
-    return this.statement;
-  }
-
-  public Integer getTaskOrder() {
-    return this.taskOrder;
-  }
-
-  public TaskType getTaskType() {
-    return this.taskType;
-  }
-
-  public Course getCourse() {
-    return this.course;
-  }
-
-  public Task(String statement, Integer order, Course course, TaskType taskType) {
+  protected Task(String statement, Integer order, TaskType taskType, Course course) {
     this.statement = statement;
-    this.taskOrder = order;
-    this.course = course;
+    this.order = order;
     this.taskType = taskType;
+    this.course = course;
   }
 }
