@@ -37,10 +37,7 @@ public class TaskService {
     validateTaskCreation(course.getId(), taskDTO.statement(), taskDTO.order());
     handleTaskReordering(taskDTO.courseId(), taskDTO.order());
 
-    OpenTextTask task = new OpenTextTask();
-    task.setStatement(taskDTO.statement());
-    task.setOrder(taskDTO.order());
-    task.setCourse(course);
+    OpenTextTask task = new OpenTextTask(taskDTO.statement(), taskDTO.order(), course);
 
     this.taskRepository.save(task);
   }
@@ -54,10 +51,8 @@ public class TaskService {
 
     handleTaskReordering(course.getId(), taskDTO.order());
 
-    SingleChoiceTask task = new SingleChoiceTask();
-    task.setStatement(taskDTO.statement());
-    task.setOrder(taskDTO.order());
-    task.setCourse(course);
+    SingleChoiceTask task = new SingleChoiceTask(taskDTO.statement(), taskDTO.order(), course, null);
+
     mapAndSetOptions(task, taskDTO.options());
 
     this.taskRepository.save(task);
@@ -72,10 +67,8 @@ public class TaskService {
 
     handleTaskReordering(course.getId(), taskDTO.order());
 
-    MultipleChoiceTask task = new MultipleChoiceTask();
-    task.setStatement(taskDTO.statement());
-    task.setOrder(taskDTO.order());
-    task.setCourse(course);
+    MultipleChoiceTask task =
+        new MultipleChoiceTask(taskDTO.statement(), taskDTO.order(), course, null);
 
     mapAndSetOptions(task, taskDTO.options());
 

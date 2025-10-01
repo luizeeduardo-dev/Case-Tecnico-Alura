@@ -4,17 +4,22 @@ import br.com.alura.AluraFake.course.Course;
 import br.com.alura.AluraFake.task.entities.TaskType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
 @Entity
 @DiscriminatorValue("SINGLE_CHOICE")
 public class SingleChoiceTask extends ChoiceTask {
 
-  public SingleChoiceTask() {
+  protected SingleChoiceTask() {
     super();
+    this.setTaskType(TaskType.SINGLE_CHOICE);
+  }
+
+  public SingleChoiceTask(
+      String statement, Integer order, Course course, java.util.List<TaskOption> options) {
+    super(options);
+    this.setStatement(statement);
+    this.setOrder(order);
+    this.setCourse(course);
     this.setTaskType(TaskType.SINGLE_CHOICE);
   }
 }

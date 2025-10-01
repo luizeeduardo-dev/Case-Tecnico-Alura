@@ -18,10 +18,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -49,10 +52,10 @@ public abstract class Task {
   @JoinColumn(name = "course_id")
   private Course course;
 
-  protected Task(String statement, Integer order, TaskType taskType, Course course) {
+  protected Task(String statement, Integer order, Course course, TaskType taskType) {
     this.statement = statement;
     this.order = order;
-    this.taskType = taskType;
     this.course = course;
+    this.taskType = taskType;
   }
 }

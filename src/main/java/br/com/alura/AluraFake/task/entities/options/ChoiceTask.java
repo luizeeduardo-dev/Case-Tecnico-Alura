@@ -1,18 +1,18 @@
 package br.com.alura.AluraFake.task.entities.options;
 
-import br.com.alura.AluraFake.course.Course;
 import br.com.alura.AluraFake.task.entities.Task;
-import br.com.alura.AluraFake.task.entities.TaskType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass

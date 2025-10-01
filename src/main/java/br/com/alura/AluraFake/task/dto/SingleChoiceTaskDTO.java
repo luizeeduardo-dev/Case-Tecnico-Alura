@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import java.util.List;
 
 public record SingleChoiceTaskDTO(
+    @NotNull
     Long courseId,
     @Size(min = 4, max = 255, message = "O enunciado deve ter entre 4 e 255 caracteres")
         String statement,

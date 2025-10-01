@@ -7,6 +7,7 @@ import br.com.alura.AluraFake.task.entities.OpenTextTask;
 import br.com.alura.AluraFake.task.entities.options.MultipleChoiceTask;
 import br.com.alura.AluraFake.task.entities.options.SingleChoiceTask;
 import br.com.alura.AluraFake.task.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,22 +23,23 @@ public class TaskController {
   }
 
   @PostMapping("/new/opentext")
-  public ResponseEntity<OpenTextTask> newOpenTextExercise(@RequestBody OpenTextTaskDTO taskDto) {
+  public ResponseEntity<OpenTextTask> newOpenTextExercise(
+      @RequestBody @Valid OpenTextTaskDTO taskDto) {
     this.taskService.createOpenTextTask(taskDto);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @PostMapping("/new/singlechoice")
   public ResponseEntity<SingleChoiceTask> newSingleChoice(
-      @RequestBody SingleChoiceTaskDTO taskDTO) {
+      @RequestBody @Valid SingleChoiceTaskDTO taskDTO) {
     this.taskService.createSingleChoiceTask(taskDTO);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @PostMapping("/new/multiplechoice")
   public ResponseEntity<MultipleChoiceTask> newMultipleChoice(
-      @RequestBody MultipleChoiceTaskDTO taskDTO) {
+      @RequestBody @Valid MultipleChoiceTaskDTO taskDTO) {
     this.taskService.createMultipleChoiceTask(taskDTO);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 }
