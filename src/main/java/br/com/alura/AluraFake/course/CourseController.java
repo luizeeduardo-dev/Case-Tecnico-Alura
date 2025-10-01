@@ -4,6 +4,7 @@ import br.com.alura.AluraFake.user.*;
 import br.com.alura.AluraFake.util.ErrorItemDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -58,5 +59,12 @@ public class CourseController {
   public ResponseEntity createCourse(@PathVariable("id") Long id) {
     this.courseService.publish(id);
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/instructor/{id}/courses")
+  public ResponseEntity<InstructorReportDTO> getInstructorReport(@PathVariable("id") Long id)
+      throws NotFoundException {
+    InstructorReportDTO report = this.courseService.getInstructorReport(id);
+    return ResponseEntity.ok(report);
   }
 }

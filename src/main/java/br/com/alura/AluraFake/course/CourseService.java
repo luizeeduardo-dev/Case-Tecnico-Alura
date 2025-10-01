@@ -1,11 +1,14 @@
 package br.com.alura.AluraFake.course;
 
+import br.com.alura.AluraFake.infra.exception.NotFoundException;
+import br.com.alura.AluraFake.infra.exception.ValidationException;
 import br.com.alura.AluraFake.task.entities.OpenTextTask;
 import br.com.alura.AluraFake.task.entities.Task;
 import br.com.alura.AluraFake.task.entities.options.MultipleChoiceTask;
 import br.com.alura.AluraFake.task.entities.options.SingleChoiceTask;
+import br.com.alura.AluraFake.user.User;
+import br.com.alura.AluraFake.user.UserRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.ValidationException;
 import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class CourseService {
 
   private final CourseRepository courseRepository;
+  private final UserRepository userRepository;
 
   @Transactional
   public void publish(Long courseId) {
@@ -58,5 +62,26 @@ public class CourseService {
         throw new ValidationException("A ordem das atividades não é uma sequência contínua.");
       }
     }
+  }
+
+  @Transactional
+  public InstructorReportDTO getInstructorReport(Long instructorId) {
+    User user =
+        this.userRepository
+            .findById(instructorId)
+            .orElseThrow(() -> new NotFoundException("Instrutor não encontrado."));
+
+    if (!user.isInstructor()) {
+      throw new ValidationException("O usuário informado não é um instrutor.");
+    }
+
+    List<Course> courses = this.courseRepository.findAllByInstructorIdWithTasks(instructorId);
+
+    List<InstructorCourseItemDTO> courseItems =
+        courses.stream().map(InstructorCourseItemDTO::new).toList();
+
+    long totalPublished = courseItems.stream().filter(c -> c.status() == Status.PUBLISHED).count();
+
+    return new InstructorReportDTO(courseItems, totalPublished);
   }
 }

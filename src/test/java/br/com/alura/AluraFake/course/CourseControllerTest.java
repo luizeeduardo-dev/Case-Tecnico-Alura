@@ -120,13 +120,13 @@ class CourseControllerTest {
 
   @Test
   void publish__should_return_ok_when_publication_succeeds() throws Exception {
-    // Arrange
     Long courseId = 1L;
     doNothing().when(this.courseService).publish(courseId);
 
-    // Act & Assert
     this.mockMvc.perform(post("/course/{id}/publish", courseId)).andExpect(status().isOk());
 
     verify(this.courseService, times(1)).publish(courseId);
   }
+
+
 }
